@@ -1,0 +1,35 @@
+* {
+    padding:0;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.container{
+    background-image: url("../assets/background.jpg");
+    height:100dvh;
+    background-size: cover;
+    overflow: hidden;
+    background-position: center;
+    position: relative;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 0;
+}
+.heading-wrapper {
+    position: relative;
+    z-index: 1;
+}
+.log-in{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}

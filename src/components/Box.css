@@ -1,0 +1,109 @@
+.box-container {
+    width: 450px;
+    height: 700px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 0 50px;
+    border-radius: 5px;
+}
+
+.box-container .heading {
+    font-size: 40px;
+    color: #ffffff;
+    padding: 50px 0px;
+    font-family: sans-serif;
+    z-index: 1;
+}
+
+.box-container .input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.box-container .input .user_name input {
+    border: 1px solid transparent;
+    outline: none;
+    padding: 2rem 1rem 0.5rem;
+    background-color: rgba(77, 76, 76, 0.5);
+    width: 100%;
+    color: #ffffff;
+    font-size: 25px;
+    border-radius: 5px;
+}
+
+.box-container .input .user_name {
+    width: 100%;
+    position: relative
+}
+
+.box-container .input .password {
+    width: 100%;
+    position: relative;
+}
+
+.box-container .input .password input {
+    border: 1px solid transparent;
+    outline: none;
+    padding: 2rem 1rem 0.5rem;
+    width: 100%;
+    background-color: rgba(77, 76, 76, 0.5);
+    color: #ffffff;
+    font-size: 25px;
+    border-radius: 5px;
+}
+
+.box-container .input .user_name .user_name_label {
+    position: absolute;
+    color: #ffffff;
+    top: 20px;
+    left: 15px;
+    font-size: 25px;
+    transition: 0.2s ease all;
+}
+
+.box-container .input .password .password_label {
+    position: absolute;
+    color: #ffffff;
+    top: 20px;
+    left: 15px;
+    font-size: 25px;
+    transition: 0.2s ease all;
+}
+.box-container .input .password input:focus {
+    border: 1px solid #ffffff;
+}
+.box-container .input .password input:focus+.password_label,
+.box-container .input .password input:valid+.password_label {
+    top: 10px;
+    font-size: 18px;
+}
+.box-container .input .user_name input:focus {
+    border: 1px solid #ffffff;
+}
+.box-container .input .user_name input:focus+.user_name_label,
+.box-container .input .user_name input:valid+.user_name_label {
+    top: 10px;
+    font-size: 18px;
+}
+
+.box-container .submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+}
+.box-container .submit button {
+    width:100%;
+    padding:10px 0;
+    border-radius: 5px;
+    background-color: #ffbe0b;
+    outline: none;
+    border: 1px solid transparent;
+    font-size:20px;
+    cursor: pointer;
+}
+.box-container .submit button:hover {
+        background-color: #ffd04f;
+}
