@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1 Movie List
+    a(href="/add") Add
+    ul
+      each movie in movies
+        li
+          a(href=`/${movie.id}`) #{movie.name} (#{movie.year})

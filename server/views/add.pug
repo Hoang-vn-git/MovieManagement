@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    h1 Add movie
+    if error
+      p(style="color:red") #{error}
+    form(action="/add" method="POST")
+      label Name:
+      input(type="text" name="name" required)
+      br
+      label Year:
+      input(type="number" name="year")
+      br
+      label Description:
+      textarea(name="description")
+      br
+      button(type="submit") Add
+    br
+    a(href="/") Back

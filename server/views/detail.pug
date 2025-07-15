@@ -1,0 +1,10 @@
+extends layout 
+
+block content 
+    h1 #{movie.name} (#{movie.year})
+    p Description: #{movie.description}
+    a(href=`/${movie.id}/edit`) Edit
+    form(action=`/${movie.id}/delete` method="POST" style="margin-top:10px")
+      button(type="submit" onclick="return confirm('Do you want to delete?')") Delete
+    br
+    a(href="/") Back

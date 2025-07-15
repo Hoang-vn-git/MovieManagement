@@ -1,0 +1,19 @@
+extends layout 
+
+block content 
+    h1 Edit
+    if error
+      p(style="color:red") #{error}
+    form(action=`/${movie.id}/edit` method="POST")
+      label Name:
+      input(type="text" name="name" required value=movie.name)
+      br
+      label Year:
+      input(type="number" name="year" value=movie.year)
+      br
+      label Description:
+      textarea(name="description") #{movie.description}
+      br
+      button(type="submit") Update
+    br
+    a(href=`/${movie.id}`) Back
