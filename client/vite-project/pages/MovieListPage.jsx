@@ -16,12 +16,12 @@ function MovieListPage() {
     return (
         <div>
             <h2>Movies</h2>
-            <Link to="/movies/add" className="button">Add New Movie</Link>
+            <Link to="/movies/add">Add New Movie</Link>
             <ul>
                 {movies.map((movie) => {
                     return (
-                        <li key={movie.id}>
-                            <Link to={`/movies/${movie.id}`}>{`${movie.name}(${movie.year})`}</Link>
+                        <li key={movie._id}>
+                            <Link to={`/movies/${movie._id}`}>{`${movie.name}(${movie.year})`}</Link>
                         </li>
 
                     )

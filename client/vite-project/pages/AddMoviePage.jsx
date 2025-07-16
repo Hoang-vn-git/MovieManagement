@@ -5,6 +5,8 @@ function AddMoviePage() {
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [desc, setDesc] = useState('');
+  const [rating, setRating] = useState('')
+  const [genres, setGenres] = useState('')
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,6 +15,8 @@ function AddMoviePage() {
     const newMovie = {
       name: name,
       year: year,
+      rating:rating,
+      genres:genres,
       description: desc,
     };
 
@@ -45,13 +49,19 @@ function AddMoviePage() {
         <label htmlFor="year">Year:</label>
         <input type="text" id="year" value={year} onChange={(e) => setYear(e.target.value)} required />
 
+         <label htmlFor="rating">Rating:</label>
+        <input type="text" id="rating" value={rating} onChange={(e) => setRating(e.target.value)} required />
+
+         <label htmlFor="genres">Genres(seperate by comma):</label>
+        <input type="text" id="genres" value={genres} onChange={(e) => setGenres(e.target.value)} required />
+
         <label htmlFor="desc">Description:</label>
         <input type="text" id="desc" value={desc} onChange={(e) => setDesc(e.target.value)} required />
 
         <button type="submit">Add</button>
       </form>
 
-      <Link to="/movies" className="button">Back</Link>
+      <Link to="/movies">Back</Link>
     </div>
   );
 }

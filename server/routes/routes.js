@@ -24,7 +24,7 @@ router.route('/add')
     .post((req, res) => {
         const { name, year, description } = req.body
 
-        if (!name) res.render('app', { error: "Name is mandatory" })
+        if (!name) res.render('add', { error: "Name is mandatory" })
 
         movies.push({
             id: nextId++,

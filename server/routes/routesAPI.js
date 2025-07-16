@@ -2,65 +2,81 @@ const express = require('express')
 
 const routerAPI = express.Router()
 
+const Movie = require("../models/movie")
+
 let movies = []
 let nextId = 0;
 
 
 routerAPI.route('/api/movies')
-    .get((req, res) => {
-        res.status(200).json(movies)
+    .get(async (req, res) => {
+        try {
+            const movies = await Movie.find({});
+            res.status(200).json(movies)
+        } catch (err) {
+            console.log("Error fetching movies: ", err)
+            res.status(500).send("Internal Server Error")
+        }
     })
 
-    .post((req, res) => {
-        const { name, year, description } = req.body
-
-
-        const newMovies = {
-            id: nextId++,
-            name: name,
-            year: year,
-            description: description
+    .post(async (req, res) => {
+        let { name, year, rating, genres, description } = req.body
+        genres = genres.split(",")
+        try {
+            const newMovie = await Movie.create({
+                name: name,
+                year: parseInt(year),
+                rating: parseInt(rating),
+                genres: genres,
+                description: description
+            })
+            res.status(200).json(newMovie)
+        } catch (err) {
+            console.log("Error adding movies: ", err)
+            res.status(500).send("Internal Server error")
         }
-        movies.push(newMovies);
-
-        res.status(201).json(newMovies)
-
+        res.redirect("/movies")
     })
 
 routerAPI.route('/api/movies/:id')
-    .get((req, res) => {
-        const movie = movies.find((movie) => {
-            return movie.id === parseInt(req.params.id)
-        })
+    .get(async (req, res) => {
+        try {
+            const movie = await Movie.findById(req.params.id)
 
-        if (!movie) res.status(404).json({ error: "Movie not found" })
+            if (!movie) res.status(404).send("Movie not found")
 
-        res.status(200).json(movie)
+            res.status(200).json(movie)
+        } catch (err) {
+            console.log("Movie not found: ", err)
+            res.status(500).send("Internal Server Error")
+        }
     })
 
-    .put((req, res) => {
-        const { name, year, description } = req.body
+    .put(async (req, res) => {
+        let { name, year, rating, genres, description } = req.body
 
-
-
-        const movie = movies.find((movie) => {
-            return movie.id === parseInt(req.params.id)
-        })
-
-        if (!movie) res.status(404).json({ error: "Movie not found" })
-
-        movie.name = name;
-        movie.year = year;
-        movie.description = description;
-
-        if (!name) res.render('app', { error: "Name is mandatory" })
-
-        res.status(200).json(movie)
-
+        try {
+            const updateMovie = await Movie.findByIdAndUpdate(req.params.id, {
+                name: name,
+                year: parseInt(year),
+                rating: parseInt(rating),
+                genres: genres,
+                description: description
+            })
+            res.status(200).json(updateMovie)
+        } catch (err) {
+            console.error("Error updating moive:", err);
+            res.status(500).send("Internal Server Error");
+        }
     })
-    .delete((req, res) => {
-        movies = movies.filter((movie) => movie.id !== parseInt(req.params.id));
-        res.status(200).json({ message: 'Movie deleted' });
+    .delete(async (req, res) => {
+        try {
+            await Movie.findByIdAndDelete(req.params.id)
+            res.status(200).json()
+        } catch (err) {
+            console.log("Cannot delete movie: ", err)
+            res.status(500).send("Internal Server error")
+        }
     })
 
 module.exports = routerAPI
