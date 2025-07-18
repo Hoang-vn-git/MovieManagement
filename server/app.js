@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended:true}))
 
 app.use(express.static('public'))
 
-app.use(cors());
+app.use(cors("l"));
 
 app.set('view engine', 'pug')
 

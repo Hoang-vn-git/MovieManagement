@@ -6,6 +6,7 @@ import MovieListPage from '../pages/MovieListPage';
 import AddMoviePage from '../pages/AddMoviePage';
 import EditMoviePage from '../pages/EditMoviePage';
 import MovieDetailPage from '../pages/MovieDetailPage';
+import "../style/style.css"
 
 export default function App() {
   return (
