@@ -28,7 +28,7 @@ function MovieListPage() {
                 {movies.map((movie) => {
                     return (
                         <li key={movie._id} >
-                            <Link to={`/movies/${movie._id}`} classname="listout">{`${movie.name}(${movie.year})`}</Link>
+                            <Link to={`/movies/${movie._id}`} className="listout">{`${movie.name}(${movie.year})`}</Link>
                         </li>
 
 
