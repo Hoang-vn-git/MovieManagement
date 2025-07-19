@@ -19,8 +19,8 @@ function MovieListPage() {
 
 
     return (
-        <div>
-            <h2 >Movies</h2>
+        <div className='container'>
+            <h2>Movies</h2>
             <div className="addmovie">
             <Link to="/movies/add" className="addmovie_button">Add New Movie</Link>
             </div>

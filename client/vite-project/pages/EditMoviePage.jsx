@@ -62,7 +62,7 @@ function EditMoviePage() {
 
 
   return (
-    <div>
+    <div className='container'>
       <h2>Edit Movie</h2>
       <form onSubmit={handleUpdate}>
         <label htmlFor="name">Name:</label>

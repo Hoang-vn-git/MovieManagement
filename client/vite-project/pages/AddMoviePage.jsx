@@ -47,7 +47,7 @@ function AddMoviePage() {
 
 
   return (
-    <div>
+    <div className='container'>
       <h2>Add Movie</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>

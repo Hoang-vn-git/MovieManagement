@@ -39,7 +39,7 @@ function MovieDetailPage() {
 
 
     return (
-        <div>
+        <div className='container'>
             <h2 className='movieName'>{movie.name}</h2>
             <p><strong>Year:</strong> {movie.year}</p>
             <p><strong>Rating:</strong> {movie.rating}</p>  
