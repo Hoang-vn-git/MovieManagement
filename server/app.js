@@ -6,19 +6,30 @@ const cors = require('cors');
 
 const path = require('path')
 
+const passport = require('passport')
+
 const router = require('./routes/routes')
 
 const routerAPI = require('./routes/routesAPI')
+
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
 app.use(express.json())
 
-app.use(express.urlencoded({extended:true}))
+app.use(cookieParser())
+
+app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static('public'))
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+
+require('./config/passport')(passport);
 
 app.set('view engine', 'pug')
 
@@ -30,6 +41,7 @@ app.use('/', routerAPI)
 
 // Connect to database
 mongoose.connect("mongodb://localhost/movie")
+
 let db = mongoose.connection;
 // Check connection
 db.once("open", () => {

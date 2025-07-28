@@ -23,4 +23,4 @@ let movieSchema = mongoose.Schema({
     }
 })
 
-let Movie = module.exports = mongoose.model("Movie", movieSchema)
+let Movie = module.exports = mongoose.model("movies", movieSchema)
