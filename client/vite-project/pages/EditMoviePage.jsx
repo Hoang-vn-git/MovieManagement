@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function EditMoviePage() {
+function EditMoviePage({ getCookie }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -29,8 +29,8 @@ function EditMoviePage() {
     const updatedMovie = {
       name: name,
       year: year,
-      rating:rating,
-      genres:genres.split(','),
+      rating: rating,
+      genres: genres.split(','),
       description: desc,
     };
 
@@ -39,6 +39,7 @@ function EditMoviePage() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getCookie('token')}`
         },
         body: JSON.stringify(updatedMovie),
       });
@@ -46,7 +47,7 @@ function EditMoviePage() {
       if (res.ok) {
         navigate(`/movies/${id}`);
       } else {
-        console.error('Failed to update movie');
+        alert('No permission');
       }
     } catch (err) {
       console.error('Update error:', err);
@@ -54,23 +55,28 @@ function EditMoviePage() {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h2>Edit Movie</h2>
       <form onSubmit={handleUpdate}>
         <label htmlFor="name">Name:</label>
         <input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
 
+
         <label htmlFor="year">Year:</label>
         <input id="year" value={year} onChange={(e) => setYear(e.target.value)} required />
+
 
         <label htmlFor="rating">Rating:</label>
         <input id="rating" value={rating} onChange={(e) => setRating(e.target.value)} required />
 
+
         <label htmlFor="genres">Genres(seperate by comma)</label>
         <input id="genres" value={genres} onChange={(e) => setGenres(e.target.value)} required />
 
+
         <label htmlFor="desc">Description:</label>
         <input id="desc" value={desc} onChange={(e) => setDesc(e.target.value)} required />
+
 
         <button type="submit">Update</button>
       </form>
