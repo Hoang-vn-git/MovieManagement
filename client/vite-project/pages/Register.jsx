@@ -37,6 +37,9 @@ export default function Register() {
 
   return (
     <div className="container">
+      <video autoPlay loop muted playsInline>
+        <source src="../images/background-video.mp4" type="video/mp4" />
+      </video>
       <h2>Register</h2>
       <form onSubmit={handleSubmit} >
         <input type="email" name='email' placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />

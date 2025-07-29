@@ -44,6 +44,9 @@ function AddMoviePage({ getCookie }) {
 
   return (
     <div className='container'>
+      <video autoPlay loop muted playsInline>
+        <source src="../images/background-video.mp4" type="video/mp4" />
+      </video>
       <h2>Add Movie</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>

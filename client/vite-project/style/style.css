@@ -15,6 +15,7 @@ body {
     object-fit: cover; /*Scale video to cover container*/
     z-index: -1; /*Place video behind content*/
 }
+
   
 h2  {
     font-size: 2rem;
@@ -40,12 +41,13 @@ form {
   
 label {
     font-weight: bold;
-    color: #000000;
+    color: #ffffff;
 }
   
 input[type="text"],
 input[type="number"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
     padding: 0.75rem;
     font-size: 1rem;
     border-radius: 5px;
@@ -54,6 +56,21 @@ input[type="password"] {
     background-color: #333;
     color: #fff;
 }
+
+input#name,
+input#year,
+input#rating,
+input#genres,
+input#desc {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #333;
+  color: #fff;
+}
+
   
 button {
     background-color: #e50914;
@@ -65,6 +82,7 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
     align-self: flex-start;
+    font-weight: bold;
 }
   
 button:hover {
@@ -76,6 +94,7 @@ a {
     text-decoration: none;
     font-weight: bold;
     margin-top: 1rem;
+    margin-left: 55px;
     display: inline-block;
 }
   
@@ -93,10 +112,14 @@ ul li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #333;
 }
+
+li {
+  margin-left: 30px;
+}
   
 .container {
     max-width: 800px;
-    height: 600px;
+    height: 800px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: #121212;
@@ -235,6 +258,10 @@ ul li {
 
 .movie-list a[href="/movies/add"]:hover {
     background-color: #f40612;
+}
+
+.textStyles {
+  color: #ffffff;
 }
 
 /* Responsive Design */

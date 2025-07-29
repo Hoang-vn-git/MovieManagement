@@ -39,26 +39,29 @@ function MovieDetailPage({getCookie}) {
 
      return (
         <div className='container'>
+            <video autoPlay loop muted playsInline>
+                <source src="../images/background-video.mp4" type="video/mp4" />
+            </video>
             <h2 className='movieName'>{movie.name}</h2>
-            <p><strong>Year:</strong> {movie.year}</p>
-            <p><strong>Rating:</strong> {movie.rating}</p>  
-            <p><strong>Genres: </strong></p>
-            <ul>
-                {movie.genres.map((genres, index) => {
-                    return (
-                        <li key={index}>{genres}</li>
-                    )
-                })}
-            </ul>
-            <p><strong>Description:</strong> {movie.description}</p>
-          
+            <div className='textStyles'>
+                <p><strong>Year:</strong> {movie.year}</p>
+                <p><strong>Rating:</strong> {movie.rating}</p>  
+                <p><strong>Genres: </strong></p>
+                <ul>
+                    {movie.genres.map((genres, index) => {
+                        return (
+                            <li key={index}>{genres}</li>
+                        )
+                    })}
+                </ul>
+                <p><strong>Description:</strong> {movie.description}</p>
+            </div>
                 
           
             <div className="edit_movie">
-
-            <Link to="/movies" className="backlist_button">Back to list</Link>
-            <Link to={`/movies/${id}/edit`} className="edit_button">Edit</Link>
-            <button onClick={handleDelete}>Delete</button>
+                <Link to="/movies" className="backlist_button">Back to list</Link>
+                <Link to={`/movies/${id}/edit`} className="edit_button">Edit</Link>
+                <button onClick={handleDelete}>Delete</button>
             </div>
             
 

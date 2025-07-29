@@ -21,6 +21,9 @@ function MovieListPage({getCookie}) {
 
   return (
         <div className='container'>
+            <video autoPlay loop muted playsInline>
+                <source src="../images/background-video.mp4" type="video/mp4" />
+            </video>
             <h2>Movies</h2>
             <div className="addmovie">
             <Link to="/movies/add" className="addmovie_button">Add New Movie</Link>
