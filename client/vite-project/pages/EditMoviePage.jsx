@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import video from '../public/background-video.mp4'
 
 function EditMoviePage({ getCookie }) {
   const { id } = useParams();
@@ -57,7 +58,7 @@ function EditMoviePage({ getCookie }) {
   return (
     <div className='container'>
       <video autoPlay loop muted playsInline>
-        <source src="../images/background-video.mp4" type="video/mp4" />
+        <source src={video} type="video/mp4" />
       </video>
       <h2>Edit Movie</h2>
       <form onSubmit={handleUpdate}>

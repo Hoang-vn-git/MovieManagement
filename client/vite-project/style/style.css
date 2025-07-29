@@ -6,7 +6,7 @@ body {
 }
 
 /*Video Background*/
-.container video {
+ video {
     position: fixed;
     top: 0;
     left: 0;
