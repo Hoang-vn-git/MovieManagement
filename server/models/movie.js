@@ -20,6 +20,14 @@ let movieSchema = mongoose.Schema({
     description:{
         type:String,
         require:true
+    },
+    postID: {
+        type:String,
+        require:true
+    },
+    user:{
+        type:String,
+        require:true
     }
 })
 

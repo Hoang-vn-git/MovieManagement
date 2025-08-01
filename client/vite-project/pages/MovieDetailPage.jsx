@@ -55,6 +55,7 @@ function MovieDetailPage({getCookie}) {
                     })}
                 </ul>
                 <p><strong>Description:</strong> {movie.description}</p>
+                <p><strong>User:</strong> {movie.user}</p>
             </div>
                 
           

@@ -7,6 +7,7 @@ export default function Register() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -20,7 +21,7 @@ export default function Register() {
         body: JSON.stringify({
           email:email,
           password:password,
-          role:1
+          name:name
         })
       });
 
@@ -42,6 +43,7 @@ export default function Register() {
       </video>
       <h2>Register</h2>
       <form onSubmit={handleSubmit} >
+         <input type="text" name='name' placeholder="Name" required onChange={(e) => setName(e.target.value)} />
         <input type="email" name='email' placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
         <input type="password" name='password' placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">Register</button>

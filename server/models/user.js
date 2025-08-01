@@ -9,8 +9,8 @@ let userSchema = mongoose.Schema({
         type:String,
         require:true
     },
-    role:{
-        type:Number,
+    name:{
+        type:String,
         require:true
     }
 

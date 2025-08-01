@@ -35,6 +35,7 @@ function AddMoviePage({ getCookie }) {
       if (res.ok) {
         navigate('/movies');
       } else {
+        console.log(res)
         alert('No permission');
       }
     } catch (err) {

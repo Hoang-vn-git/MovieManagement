@@ -47,27 +47,43 @@ const checkToken = async (req, res, next) => {
     }
 }
 
-// check role
-const checkRole = async (req, res, next) => {
-    const token = req.token;
+// // check role
+// const checkRole = async (req, res, next) => {
+//     const token = req.token;
+
+//     try {
+//         const payload = jwt.verify(token, 'privatekey');
+//         const user = await User.findById(payload.userID);
+
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+//         if (user.role === 0) {
+//             next();
+//         } else {
+//             res.status(403).json({ message: "No Permission" });
+//         }
+//     } catch (err) {
+//         console.error("Token verification error:", err);
+//         res.status(401).json({ message: "Invalid or expired token" });
+//     }
+// };
+
+
+// check creator
+const checkCreator = async (req, res, next) => {
+    const token = req.token
 
     try {
         const payload = jwt.verify(token, 'privatekey');
-        const user = await User.findById(payload.userID);
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        if (user.role === 0) {
-            next();
-        } else {
-            res.status(403).json({ message: "No Permission" });
-        }
+        req.userID = payload.userID
+        next()
     } catch (err) {
         console.error("Token verification error:", err);
         res.status(401).json({ message: "Invalid or expired token" });
     }
-};
+}
+
 
 // Validate 
 const validator = async (req, res, next) => {
@@ -92,25 +108,25 @@ routerAPI.route('/api')
             if (err) return next(err);
 
             if (!user) {
-                return res.status(401).json({ message: "Authentication failed" });
+                return res.status(401).json({ message: info?.message || "Authentication failed" });
             }
 
-            // VERIFY SUCCESSFUL --> CREATE TOKEN
+
             const token = jwt.sign({ userID: user._id }, 'privatekey', { expiresIn: '1h' });
 
-           
+
             res.cookie('token', token, {
                 httpOnly: false,
                 sameSite: 'lax',
-                secure: false,  
+                secure: false,
             }).status(200).json({ message: 'Login successful', token });
-        })(req, res, next); // <
+        })(req, res, next);
     })
 
 routerAPI.route('/api/logout')
     .get((req, res) => {
         res.clearCookie('token', {
-            httpOnly: false,     // PHẢI giống lúc set
+            httpOnly: false,
             sameSite: 'lax',
             secure: false
         });
@@ -120,9 +136,9 @@ routerAPI.route('/api/logout')
 routerAPI.route('/api/register')
     .post(validator, async (req, res) => {
         try {
-            const { email, password, role } = req.body;
+            const { email, password, name } = req.body;
 
-            // Kiểm tra email trùng
+
             const existed = await User.findOne({ email });
             if (existed) {
                 return res.status(400).json({
@@ -130,18 +146,18 @@ routerAPI.route('/api/register')
                 });
             }
 
-            // Hash mật khẩu
+
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
 
-            // Tạo user
+
             const newUser = await User.create({
                 email: email,
                 password: hashedPassword,
-                role: role
+                name: name
             });
 
-            // Trả về thành công (ẩn password)
+
             res.status(201).json({
                 message: 'User registered successfully',
                 user: {
@@ -154,8 +170,6 @@ routerAPI.route('/api/register')
             res.status(500).json({ error: 'Server Error' });
         }
     });
-
-// List movie
 routerAPI.route('/api/movies')
     .get(checkToken, async (req, res) => {
         try {
@@ -166,26 +180,28 @@ routerAPI.route('/api/movies')
             res.status(500).send("Internal Server Error")
         }
     })
-    // Add movie
-    .post(checkToken, checkRole, async (req, res) => {
+
+    .post(checkToken, async (req, res) => {
 
         let { name, year, rating, genres, description } = req.body
         genres = genres.split(",")
         try {
-            const newMovie = await Movie.create({
+           const newMovie =  await Movie.create({
                 name: name,
                 year: parseInt(year),
                 rating: parseInt(rating),
                 genres: genres,
-                description: description
+                description: description,
+                postID: req.token,
+                user: req.user.name
             })
-            res.status(200).json(newMovie)
+             res.status(200).json(newMovie)
         } catch (err) {
             console.log("Error adding movies: ", err)
-            res.status(500).send("Internal Server error")
+            return res.status(500).send("Internal Server error")
         }
     })
-// Movie detail
+
 routerAPI.route('/api/movies/:id')
     .get((async (req, res) => {
         try {
@@ -201,29 +217,43 @@ routerAPI.route('/api/movies/:id')
     })
     )
 
-    // Update movie
-    .put(checkToken, checkRole, async (req, res) => {
+    .put(checkToken, checkCreator, async (req, res) => {
         let { name, year, rating, genres, description } = req.body
 
         try {
-            const updateMovie = await Movie.findByIdAndUpdate(req.params.id, {
-                name: name,
-                year: parseInt(year),
-                rating: parseInt(rating),
-                genres: genres,
-                description: description
-            })
-            res.status(200).json(updateMovie)
+            const movie = await Movie.findById(req.params.id)
+            const postID = jwt.verify(movie.postID, 'privatekey')
+
+            if (postID.userID === req.userID) {
+                const updateMovie = await Movie.findByIdAndUpdate(req.params.id, {
+                    name: name,
+                    year: parseInt(year),
+                    rating: parseInt(rating),
+                    genres: genres,
+                    description: description
+                })
+                res.status(200).json(updateMovie)
+            } else {
+                res.status(403).json({ message: "You cannot update the movie" });
+            }
         } catch (err) {
             console.error("Error updating moive:", err);
             res.status(500).send("Internal Server Error");
         }
     })
-    // Delete movie
-    .delete(checkToken, checkRole, async (req, res) => {
+    .delete(checkToken, checkCreator, async (req, res) => {
         try {
-            await Movie.findByIdAndDelete(req.params.id)
-            res.status(200).json()
+            const movie = await Movie.findById(req.params.id)
+            const postID = jwt.verify(movie.postID, 'privatekey')
+
+
+            if (postID.userID === req.userID) {
+                await Movie.findByIdAndDelete(req.params.id);
+                res.status(200).json({ message: "Deleted" })
+            } else {
+                res.status(403).json({ message: "You cannot delete the movie" });
+            }
+
         } catch (err) {
             console.log("Cannot delete movie: ", err)
             res.status(500).send("Internal Server error")
