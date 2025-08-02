@@ -27,6 +27,7 @@ function EditMoviePage() {
         setRating(data.rating);
         setGenres(data.genres.join(","));
         setDesc(data.description);
+        console.log(data)
       })
       .catch((err) => console.error('Fetch movie failed:', err));
   }, [id]);
