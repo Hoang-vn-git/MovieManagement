@@ -97,7 +97,7 @@ const validator = async (req, res, next) => {
         next()
     } else {
         res.status(400).json({
-            message: errors.array()
+            message: errors.array()[0].msg
         })
     }
 }
@@ -108,7 +108,7 @@ routerAPI.route('/api')
             if (err) return next(err);
 
             if (!user) {
-                return res.status(401).json({ message: info?.message || "Authentication failed" });
+                return res.status(401).json({ message:info.message});
             }
 
 
@@ -142,7 +142,7 @@ routerAPI.route('/api/register')
             const existed = await User.findOne({ email });
             if (existed) {
                 return res.status(400).json({
-                    errors: [{ msg: 'Email already exists' }]
+                    message: "Email already exits"
                 });
             }
 
@@ -186,7 +186,7 @@ routerAPI.route('/api/movies')
         let { name, year, rating, genres, description } = req.body
         genres = genres.split(",")
         try {
-           const newMovie =  await Movie.create({
+          await Movie.create({
                 name: name,
                 year: parseInt(year),
                 rating: parseInt(rating),
@@ -195,7 +195,7 @@ routerAPI.route('/api/movies')
                 postID: req.token,
                 user: req.user.name
             })
-             res.status(200).json(newMovie)
+            res.status(200).json({message:"Add Successfully"})
         } catch (err) {
             console.log("Error adding movies: ", err)
             return res.status(500).send("Internal Server error")
@@ -232,7 +232,7 @@ routerAPI.route('/api/movies/:id')
                     genres: genres,
                     description: description
                 })
-                res.status(200).json(updateMovie)
+                res.status(200).json({message:"Update successfully"})
             } else {
                 res.status(403).json({ message: "You cannot update the movie" });
             }
@@ -249,7 +249,7 @@ routerAPI.route('/api/movies/:id')
 
             if (postID.userID === req.userID) {
                 await Movie.findByIdAndDelete(req.params.id);
-                res.status(200).json({ message: "Deleted" })
+                res.status(200).json({ message: "Deleted successfully" })
             } else {
                 res.status(403).json({ message: "You cannot delete the movie" });
             }

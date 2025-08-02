@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import video from '../public/background-video.mp4'
 
 function EditMoviePage({ getCookie }) {
@@ -44,11 +44,12 @@ function EditMoviePage({ getCookie }) {
         },
         body: JSON.stringify(updatedMovie),
       });
-
+      const message = await res.json()
       if (res.ok) {
+        alert(message.message)
         navigate(`/movies/${id}`);
       } else {
-        alert('No permission');
+         alert(message.message)
       }
     } catch (err) {
       console.error('Update error:', err);
@@ -63,26 +64,29 @@ function EditMoviePage({ getCookie }) {
       <h2>Edit Movie</h2>
       <form onSubmit={handleUpdate}>
         <label htmlFor="name">Name:</label>
-        <input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
 
 
         <label htmlFor="year">Year:</label>
-        <input id="year" value={year} onChange={(e) => setYear(e.target.value)} required />
+        <input type="number" id="year" value={year} onChange={(e) => setYear(e.target.value)} required />
 
 
         <label htmlFor="rating">Rating:</label>
-        <input id="rating" value={rating} onChange={(e) => setRating(e.target.value)} required />
+        <input type="number" id="rating" value={rating} onChange={(e) => setRating(e.target.value)} required />
 
 
         <label htmlFor="genres">Genres(seperate by comma)</label>
-        <input id="genres" value={genres} onChange={(e) => setGenres(e.target.value)} required />
+        <input type="text" id="genres" value={genres} onChange={(e) => setGenres(e.target.value)} required />
 
 
         <label htmlFor="desc">Description:</label>
-        <input id="desc" value={desc} onChange={(e) => setDesc(e.target.value)} required />
+        <input type="text" id="desc" value={desc} onChange={(e) => setDesc(e.target.value)} required />
 
 
-        <button type="submit">Update</button>
+        <div className="add_back">
+          <button type="submit">Update</button>
+           <Link to={`/movies/${id}`}  className="back_button">Back</Link>
+        </div>
       </form>
     </div>
   );

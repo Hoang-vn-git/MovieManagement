@@ -31,12 +31,13 @@ function AddMoviePage({ getCookie }) {
         body: JSON.stringify(newMovie)
       });
 
+      const message = await res.json()
       // RESPONE VERIFY --> MOVIES
       if (res.ok) {
+        alert(message.message)
         navigate('/movies');
       } else {
-        console.log(res)
-        alert('No permission');
+        alert('Cannot add movie');
       }
     } catch (err) {
       console.error("Error:", err);
@@ -55,11 +56,11 @@ function AddMoviePage({ getCookie }) {
 
 
         <label htmlFor="year">Year:</label>
-        <input type="text" id="year" value={year} onChange={(e) => setYear(e.target.value)} required />
+        <input type="number" id="year" value={year} onChange={(e) => setYear(e.target.value)} required />
 
 
         <label htmlFor="rating">Rating:</label>
-        <input type="text" id="rating" value={rating} onChange={(e) => setRating(e.target.value)} required />
+        <input type="number" id="rating" value={rating} onChange={(e) => setRating(e.target.value)} required />
 
 
         <label htmlFor="genres">Genres(seperate by comma):</label>

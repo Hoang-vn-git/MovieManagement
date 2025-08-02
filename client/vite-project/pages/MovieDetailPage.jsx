@@ -25,10 +25,12 @@ function MovieDetailPage({getCookie}) {
                     'Authorization': `Bearer ${getCookie('token')}`
                 },
             });
+            const message = await res.json()
             if (res.ok) {
+                alert(message.message)
                 navigate('/movies');
             } else {
-                alert('No permission');
+                alert(message.message)
             }
         } catch (err) {
             console.error('Error deleting movie:', err);
@@ -55,7 +57,7 @@ function MovieDetailPage({getCookie}) {
                     })}
                 </ul>
                 <p><strong>Description:</strong> {movie.description}</p>
-                <p><strong>User:</strong> {movie.user}</p>
+                <p><strong>Posted by:</strong> {movie.user}</p>
             </div>
                 
           

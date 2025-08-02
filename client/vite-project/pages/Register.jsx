@@ -8,6 +8,7 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -23,12 +24,14 @@ export default function Register() {
           password:password,
           name:name
         })
-      });
-
+      })
+      const message = await res.json()
       if (res.ok) {
+        alert(message.message)
         navigate('/');
       } else {
-        alert("Cannot Register")
+        alert(message.message)
+         
       }
     } catch (err) {
       console.error("Error:", err);

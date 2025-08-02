@@ -15,6 +15,7 @@ export default function LoginPage() {
       credentials: 'include',
     });
   }, []);
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -29,12 +30,15 @@ export default function LoginPage() {
           email: email,
           password: password
         })
-      });
+      })
+
+      const message = await res.json()
 
       if (res.ok) {
+        alert(message.message)
         navigate('/movies');
       } else {
-        alert("Can not log in")
+        alert(message.message)
       }
     } catch (err) {
       console.error("Error:", err);
