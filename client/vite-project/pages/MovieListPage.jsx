@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import video from '../public/background-video.mp4'
 
 function MovieListPage({getCookie}) {
   const [movies, setMovies] = useState([]);
@@ -22,7 +23,7 @@ function MovieListPage({getCookie}) {
   return (
         <div className='container'>
             <video autoPlay loop muted playsInline>
-                <source src="../images/background-video.mp4" type="video/mp4" />
+                <source src={video} type="video/mp4" />
             </video>
             <h2>Movies</h2>
             <div className="addmovie">

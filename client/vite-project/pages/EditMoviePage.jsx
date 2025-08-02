@@ -38,7 +38,11 @@ function EditMoviePage({ getCookie }) {
     try {
       const res = await fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
         method: 'PUT',
-         credentials:"include",
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
         body: JSON.stringify(updatedMovie),
       });
       const message = await res.json()
@@ -46,7 +50,7 @@ function EditMoviePage({ getCookie }) {
         alert(message.message)
         navigate(`/movies/${id}`);
       } else {
-         alert(message.message)
+        alert(message.message)
       }
     } catch (err) {
       console.error('Update error:', err);
@@ -82,7 +86,7 @@ function EditMoviePage({ getCookie }) {
 
         <div className="add_back">
           <button type="submit">Update</button>
-           <Link to={`/movies/${id}`}  className="back_button">Back</Link>
+          <Link to={`/movies/${id}`} className="back_button">Back</Link>
         </div>
       </form>
     </div>

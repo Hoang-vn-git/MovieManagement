@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import video from '../public/background-video.mp4'
 
 function AddMoviePage({ getCookie }) {
   const [name, setName] = useState('');
@@ -24,7 +25,11 @@ function AddMoviePage({ getCookie }) {
     try {
       const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies', {
         method: 'POST',
-         credentials:"include",
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
         body: JSON.stringify(newMovie)
       });
 
@@ -44,7 +49,7 @@ function AddMoviePage({ getCookie }) {
   return (
     <div className='container'>
       <video autoPlay loop muted playsInline>
-        <source src="../images/background-video.mp4" type="video/mp4" />
+        <source src={video} type="video/mp4" />
       </video>
       <h2>Add Movie</h2>
       <form onSubmit={handleSubmit}>

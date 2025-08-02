@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import video from '../public/background-video.mp4'
 
-function MovieDetailPage({getCookie}) {
+function MovieDetailPage({ getCookie }) {
     const { id } = useParams()
     const [movie, setMovie] = useState({})
     const navigate = useNavigate();
@@ -20,7 +21,11 @@ function MovieDetailPage({getCookie}) {
         try {
             const res = await fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
                 method: 'DELETE',
- credentials:"include"
+                credentials: "include",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
             });
             const message = await res.json()
             if (res.ok) {
@@ -36,15 +41,15 @@ function MovieDetailPage({getCookie}) {
 
     if (!movie.name) return <h1>Movie not found</h1>
 
-     return (
+    return (
         <div className='container'>
             <video autoPlay loop muted playsInline>
-                <source src="../images/background-video.mp4" type="video/mp4" />
+                <source src={video} type="video/mp4" />
             </video>
             <h2 className='movieName'>{movie.name}</h2>
             <div className='textStyles'>
                 <p><strong>Year:</strong> {movie.year}</p>
-                <p><strong>Rating:</strong> {movie.rating}</p>  
+                <p><strong>Rating:</strong> {movie.rating}</p>
                 <p><strong>Genres: </strong></p>
                 <ul>
                     {movie.genres.map((genres, index) => {
@@ -56,14 +61,14 @@ function MovieDetailPage({getCookie}) {
                 <p><strong>Description:</strong> {movie.description}</p>
                 <p><strong>Posted by:</strong> {movie.user}</p>
             </div>
-                
-          
+
+
             <div className="edit_movie">
                 <Link to="/movies" className="backlist_button">Back to list</Link>
                 <Link to={`/movies/${id}/edit`} className="edit_button">Edit</Link>
                 <button onClick={handleDelete}>Delete</button>
             </div>
-            
+
 
 
         </div>

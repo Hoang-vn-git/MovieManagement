@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import '../style/style.css';
 import { useNavigate } from 'react-router-dom';
+import video from '../public/background-video.mp4'
 export default function Register() {
+  
 
   const navigate = useNavigate()
 
@@ -42,7 +44,7 @@ export default function Register() {
   return (
     <div className="container">
       <video autoPlay loop muted playsInline>
-        <source src="../images/background-video.mp4" type="video/mp4" />
+        <source src={video} type="video/mp4" />
       </video>
       <h2>Register</h2>
       <form onSubmit={handleSubmit} >

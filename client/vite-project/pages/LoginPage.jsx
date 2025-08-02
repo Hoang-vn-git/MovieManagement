@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../style/style.css';
 import { useNavigate, Link } from 'react-router-dom';
+import video from '../public/background-video.mp4'
 
 export default function LoginPage() {
 
@@ -44,7 +45,7 @@ export default function LoginPage() {
   return (
     <div className="container">
       <video autoPlay loop muted playsInline>
-        <source src="../images/background-video.mp4" type="video/mp4" />
+        <source src={video} type="video/mp4" />
       </video>
       <h2>Login</h2>
       <form onSubmit={handleSubmit} >
