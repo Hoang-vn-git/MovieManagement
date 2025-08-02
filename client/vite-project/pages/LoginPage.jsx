@@ -17,10 +17,6 @@ export default function LoginPage() {
     try {
       const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api', {
         method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({
           email: email,
           password: password
