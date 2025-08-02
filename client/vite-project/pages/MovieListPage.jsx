@@ -8,7 +8,6 @@ function MovieListPage({getCookie}) {
   useEffect(() => {
     fetch("https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies", {
       method:"GET",
-      credentials:"include"
     }
     )
       .then((res) => res.json())

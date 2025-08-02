@@ -29,6 +29,7 @@ export default function LoginPage() {
       const message = await res.json()
 
       if (res.ok) {
+        localStorage.setItem('token', message.token);
         navigate('/movies');
         alert(message.message)
       } else {

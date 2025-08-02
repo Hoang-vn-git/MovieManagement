@@ -1,27 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 const PrivateRoute = ({ Component }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch("https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/check-token", {
-          credentials: "include",
-        });
-        setIsAuthenticated(res.ok);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    };
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
 
-    checkAuth();
-  }, []);
-
-  if (isAuthenticated === null) return null;
-
-  return isAuthenticated ? <Component /> : <Navigate to="/" replace />;
+  return <Component />;
 };
-
 export default PrivateRoute;
