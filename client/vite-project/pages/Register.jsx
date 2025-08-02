@@ -13,7 +13,7 @@ export default function Register() {
     e.preventDefault()
 
     try {
-      const res = await fetch('http://localhost:8000/api/register', {
+      const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/register', {
         method: 'POST',
         credentials: 'include',
         headers: {

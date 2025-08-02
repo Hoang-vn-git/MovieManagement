@@ -7,7 +7,7 @@ function MovieDetailPage({getCookie}) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/movies/${id}`)
+        fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`)
             .then((res) => res.json())
             .then((data) => setMovie(data))
             .catch((err) => console.error("Failed to fetch movie:", err));
@@ -18,7 +18,7 @@ function MovieDetailPage({getCookie}) {
         if (!confirmDelete) return;
 
         try {
-            const res = await fetch(`http://localhost:8000/api/movies/${id}`, {
+            const res = await fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

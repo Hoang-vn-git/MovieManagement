@@ -6,7 +6,7 @@ function MovieListPage({getCookie}) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/movies", {
+    fetch("https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies", {
       method:"GET",
       headers:{
          'Content-Type': 'application/json',

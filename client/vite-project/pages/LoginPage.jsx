@@ -8,19 +8,12 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  useEffect(() => {
-    fetch('http://localhost:8000/api/logout', {
-      method: 'GET',
-      credentials: 'include',
-    });
-  }, []);
   
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      const res = await fetch('http://localhost:8000/api', {
+      const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -35,8 +28,8 @@ export default function LoginPage() {
       const message = await res.json()
 
       if (res.ok) {
-        alert(message.message)
         navigate('/movies');
+        alert(message.message)
       } else {
         alert(message.message)
       }

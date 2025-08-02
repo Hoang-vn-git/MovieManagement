@@ -13,7 +13,7 @@ function EditMoviePage({ getCookie }) {
   const [desc, setDesc] = useState('');
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/movies/${id}`)
+    fetch(`mongodb+srv://Cluster03955:fVVMbVhuXHlj@movies.p2w6cgw.mongodb.net/movie?retryWrites=true&w=majority&appName=movies/api/movies/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setName(data.name);
@@ -36,7 +36,7 @@ function EditMoviePage({ getCookie }) {
     };
 
     try {
-      const res = await fetch(`http://localhost:8000/api/movies/${id}`, {
+      const res = await fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

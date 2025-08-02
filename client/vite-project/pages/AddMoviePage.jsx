@@ -22,7 +22,7 @@ function AddMoviePage({ getCookie }) {
 
     // POST API
     try {
-      const res = await fetch('http://localhost:8000/api/movies', {
+      const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
