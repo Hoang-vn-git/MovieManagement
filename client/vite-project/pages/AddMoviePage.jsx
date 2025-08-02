@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import video from '../public/background-video.mp4'
 
-function AddMoviePage({ getCookie }) {
+function AddMoviePage({  }) {
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [desc, setDesc] = useState('');

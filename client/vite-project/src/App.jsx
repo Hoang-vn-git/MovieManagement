@@ -12,23 +12,17 @@ import Register from '../pages/Register';
 
 
 export default function App() {
-  const getCookie = (cookieName) => { // referrences stackoverflow 
-        const cookie = document.cookie
-            .split(';')
-            .map(cookie => cookie.split('='))
-            .reduce((accumulator, [key, value]) => ({ ...accumulator, [key.trim()]: decodeURIComponent(value) }), {});
-        return cookie[cookieName];
-    }
+  
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/movies" element={<PrivateRoute Component={MovieListPage} getCookie={getCookie}/>} />
-        <Route path="/movies/add" element={<PrivateRoute Component={AddMoviePage} getCookie={getCookie}/>} />
-        <Route path="/movies/:id/edit" element={<PrivateRoute Component={EditMoviePage} getCookie={getCookie}/>} />
-        <Route path="/movies/:id" element={<PrivateRoute Component={MovieDetailPage} getCookie={getCookie}/>} />
+        <Route path="/movies" element={<PrivateRoute Component={MovieListPage} />} />
+        <Route path="/movies/add" element={<PrivateRoute Component={AddMoviePage} />} />
+        <Route path="/movies/:id/edit" element={<PrivateRoute Component={EditMoviePage} />} />
+        <Route path="/movies/:id" element={<PrivateRoute Component={MovieDetailPage} />} />
       </Routes>
     </Router>
   );

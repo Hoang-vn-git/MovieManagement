@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import video from '../public/background-video.mp4'
 
-function MovieListPage({getCookie}) {
+function MovieListPage({}) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import video from '../public/background-video.mp4'
 
-function MovieDetailPage({ getCookie }) {
+function MovieDetailPage({ }) {
     const { id } = useParams()
     const [movie, setMovie] = useState({})
     const navigate = useNavigate();
