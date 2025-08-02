@@ -8,7 +8,13 @@ function MovieDetailPage({ getCookie }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`)
+        fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then((res) => res.json())
             .then((data) => setMovie(data))
             .catch((err) => console.error("Failed to fetch movie:", err));
