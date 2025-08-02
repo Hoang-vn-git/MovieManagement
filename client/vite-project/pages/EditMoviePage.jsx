@@ -45,7 +45,6 @@ function EditMoviePage() {
     try {
       const res = await fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
         method: 'PUT',
-        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
