@@ -24,10 +24,7 @@ function AddMoviePage({ getCookie }) {
     try {
       const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getCookie('token')}`
-        },
+         credentials:"include",
         body: JSON.stringify(newMovie)
       });
 

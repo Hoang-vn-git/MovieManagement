@@ -38,10 +38,7 @@ function EditMoviePage({ getCookie }) {
     try {
       const res = await fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getCookie('token')}`
-        },
+         credentials:"include",
         body: JSON.stringify(updatedMovie),
       });
       const message = await res.json()
