@@ -13,7 +13,7 @@ function EditMoviePage() {
   const [desc, setDesc] = useState('');
 
   useEffect(() => {
-    fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/${id}`, {
+    fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/movies/${id}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
