@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import video from '../public/background-video.mp4'
 
-function EditMoviePage({ getCookie }) {
+function EditMoviePage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ function EditMoviePage({ getCookie }) {
   const [desc, setDesc] = useState('');
 
   useEffect(() => {
-    fetch(`mongodb+srv://Cluster03955:fVVMbVhuXHlj@movies.p2w6cgw.mongodb.net/movie?retryWrites=true&w=majority&appName=movies/api/movies/${id}`)
+    fetch(`https://mighty-mesa-62871-571878c34ddf.herokuapp.com/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setName(data.name);
