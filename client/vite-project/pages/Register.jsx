@@ -3,7 +3,7 @@ import '../style/style.css';
 import { useNavigate } from 'react-router-dom';
 import video from '../public/background-video.mp4'
 export default function Register() {
-  
+
 
   const navigate = useNavigate()
 
@@ -17,10 +17,13 @@ export default function Register() {
     try {
       const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api/register', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          email:email,
-          password:password,
-          name:name
+          email: email,
+          password: password,
+          name: name
         })
       })
       const message = await res.json()
@@ -29,7 +32,7 @@ export default function Register() {
         navigate('/');
       } else {
         alert(message.message)
-         
+
       }
     } catch (err) {
       console.error("Error:", err);
@@ -44,7 +47,7 @@ export default function Register() {
       </video>
       <h2>Register</h2>
       <form onSubmit={handleSubmit} >
-         <input type="text" name='name' placeholder="Name" required onChange={(e) => setName(e.target.value)} />
+        <input type="text" name='name' placeholder="Name" required onChange={(e) => setName(e.target.value)} />
         <input type="email" name='email' placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
         <input type="password" name='password' placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">Register</button>

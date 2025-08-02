@@ -7,16 +7,19 @@ export default function LoginPage() {
 
   const navigate = useNavigate()
 
-  
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
       const res = await fetch('https://mighty-mesa-62871-571878c34ddf.herokuapp.com/api', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           email: email,
           password: password
