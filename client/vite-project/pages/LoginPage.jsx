@@ -45,7 +45,7 @@ export default function LoginPage() {
       </video>
       <h2>Login</h2>
       <form onSubmit={handleSubmit} >
-        <input type="text" placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
+        <input type="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
         <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">Login</button>
       </form>
