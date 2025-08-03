@@ -14,6 +14,7 @@ const routerAPI = require('./routes/routesAPI')
 
 const cookieParser = require('cookie-parser')
 
+
 const app = express()
 
 app.use(express.json())
@@ -25,8 +26,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
+    origin: 'https://movie-management-six.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
 }));
 
 require('./config/passport')(passport);
@@ -40,7 +42,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.use('/', routerAPI)
 
 // Connect to database
-mongoose.connect("mongodb://localhost/movie")
+mongoose.connect("mongodb+srv://Cluster03955:fVVMbVhuXHlj@movies.p2w6cgw.mongodb.net/movie?retryWrites=true&w=majority&appName=movies")
 
 let db = mongoose.connection;
 // Check connection
@@ -52,4 +54,8 @@ db.on("error", (err) => {
     console.log("DB error")
 })
 
-app.listen(8000, () => console.log('Server is running on PORT 8000'))
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on PORT ${PORT}`);
+});

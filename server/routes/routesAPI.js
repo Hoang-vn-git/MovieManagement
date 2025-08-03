@@ -19,33 +19,24 @@ const { check, validationResult } = require('express-validator')
 
 
 // check token
-
 const checkToken = async (req, res, next) => {
     try {
-        const header = req.headers['authorization']
+        const authHeader = req.headers['authorization'];
+        if (!authHeader) return res.status(403).json({ message: "No token provided" });
 
-        if (!header) return res.status(403).send("ERROR")
+        const token = authHeader.split(' ')[1]; // Bearer <token>
+        if (!token) return res.status(403).json({ message: "Token malformed" });
 
-        const bearer = header.split(' ')
+        const payload = jwt.verify(token, 'privatekey');
 
-        const token = bearer[1]
-
-        const payload = jwt.verify(token, 'privatekey')
-
-        const user = await User.findById({ _id: payload.userID })
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        req.token = token;
-        req.user = user;
+        const user = await User.findById(payload.userID);
+        req.user = user
+        req.token = token
         next();
     } catch (err) {
-        console.error("checkToken error:", err.message);
-        res.status(401).json({ message: "Invalid token" });
-
+        return res.status(401).json({ message: err.message });
     }
-}
+};
 
 // // check role
 // const checkRole = async (req, res, next) => {
@@ -72,12 +63,18 @@ const checkToken = async (req, res, next) => {
 
 // check creator
 const checkCreator = async (req, res, next) => {
-    const token = req.token
-
     try {
+        const authHeader = req.headers['authorization'];
+
+        if (!authHeader) {
+            return res.status(403).json({ message: "No token provided" });
+        }
+
+        const token = authHeader.split(' ')[1];
         const payload = jwt.verify(token, 'privatekey');
-        req.userID = payload.userID
-        next()
+
+        req.userID = payload.userID;
+        next();
     } catch (err) {
         console.error("Token verification error:", err);
         res.status(401).json({ message: "Invalid or expired token" });
@@ -101,37 +98,33 @@ const validator = async (req, res, next) => {
         })
     }
 }
-// create token
+// Login
 routerAPI.route('/api')
     .post(validator, (req, res, next) => {
         passport.authenticate("local", (err, user, info) => {
             if (err) return next(err);
 
             if (!user) {
-                return res.status(401).json({ message:info.message});
+                return res.status(401).json({ message: info.message });
             }
-
 
             const token = jwt.sign({ userID: user._id }, 'privatekey', { expiresIn: '1h' });
 
-
-            res.cookie('token', token, {
-                httpOnly: false,
-                sameSite: 'lax',
-                secure: false,
-            }).status(200).json({ message: 'Login successful', token });
+            return res.status(200).json({ message: 'Login successful', token });
         })(req, res, next);
-    })
-
-routerAPI.route('/api/logout')
-    .get((req, res) => {
-        res.clearCookie('token', {
-            httpOnly: false,
-            sameSite: 'lax',
-            secure: false
-        });
-        res.status(200).json({ message: "Logged out" });
     });
+
+// Log out
+// routerAPI.route('/api/logout')
+//     .get((req, res) => {
+//         res.clearCookie('token', {
+//             httpOnly: true,
+//             sameSite: 'none',
+//             secure: true
+//         });
+//         res.status(200).json({ message: "Logged out" });
+//     });
+
 // Register 
 routerAPI.route('/api/register')
     .post(validator, async (req, res) => {
@@ -185,23 +178,25 @@ routerAPI.route('/api/movies')
 
         let { name, year, rating, genres, description } = req.body
         genres = genres.split(",")
+        const postID = jwt.sign({ userID: req.user._id }, 'privatekey');
+
         try {
-          await Movie.create({
+            await Movie.create({
                 name: name,
                 year: parseInt(year),
                 rating: parseInt(rating),
                 genres: genres,
                 description: description,
-                postID: req.token,
+                postID: postID,
                 user: req.user.name
             })
-            res.status(200).json({message:"Add Successfully"})
+            res.status(200).json({ message: "Add Successfully" })
         } catch (err) {
             console.log("Error adding movies: ", err)
             return res.status(500).send("Internal Server error")
         }
     })
-
+ 
 routerAPI.route('/api/movies/:id')
     .get((async (req, res) => {
         try {
@@ -232,7 +227,7 @@ routerAPI.route('/api/movies/:id')
                     genres: genres,
                     description: description
                 })
-                res.status(200).json({message:"Update successfully"})
+                res.status(200).json({ message: "Update successfully" })
             } else {
                 res.status(403).json({ message: "You cannot update the movie" });
             }
@@ -256,7 +251,7 @@ routerAPI.route('/api/movies/:id')
 
         } catch (err) {
             console.log("Cannot delete movie: ", err)
-            res.status(500).send("Internal Server error")
+            res.status(500).json("Internal Server error")
         }
     })
 
